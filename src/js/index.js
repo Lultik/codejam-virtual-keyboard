@@ -1,4 +1,5 @@
 import { builtHtmlElement } from './templateHelper';
+import { lang } from './language';
 
 class Keyboard {
   constructor() {
