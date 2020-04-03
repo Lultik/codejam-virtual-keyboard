@@ -26,6 +26,7 @@ class Keyboard {
       classList: ['keyboard__keys'],
     });
 
+
     this.elements.keyContainer.appendChild(this.createKeys(this.props.language));
     this.elements.keys = this.elements.keyContainer.querySelectorAll('.keyboard__key');
 
@@ -33,6 +34,7 @@ class Keyboard {
     document.body.appendChild(this.elements.keyContainer);
 
     document.addEventListener('keydown', (e) => { this.pressKey(e); });
+    document.addEventListener('keyup', (e) => { this.keyUp(e); });
   }
 
   createKeys(language) {
@@ -42,14 +44,14 @@ class Keyboard {
         '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
         'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\',
         'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter',
-        'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Shift', 'Up',
-        'Ctrl', 'lang', 'Alt', 'Space', 'Alt', 'Ctrl', 'Left', 'Down', 'Right'],
+        'Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', 'Up',
+        'Ctrl', 'lang', 'Alt', 'Space', 'Ctrl', 'Left', 'Down', 'Right'],
       ru: [
         '`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
         'Tab', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ', '\\',
         'CapsLock', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э', 'Enter',
-        'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Shift', 'Up',
-        'Ctrl', 'lang', 'Alt', 'Space', 'Alt', 'Ctrl', 'Left', 'Down', 'Right'],
+        'Shift', 'я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю', '.', 'Up',
+        'Ctrl', 'lang', 'Alt', 'Space', 'Ctrl', 'Left', 'Down', 'Right'],
     };
 
     keyLayout[language].forEach((key) => {
@@ -73,7 +75,7 @@ class Keyboard {
         case 'Tab':
           keyElement.innerHTML = '<span>Tab</span>';
           keyElement.addEventListener('mousedown', () => {
-            this.elements.textarea.value += `${' '.repeat(4)}`;
+            this.elements.textarea.value += '\t';
           });
           break;
         case 'CapsLock':
@@ -103,6 +105,12 @@ class Keyboard {
           break;
         case 'Shift':
           keyElement.innerHTML = '<span>Shift</span>';
+          keyElement.addEventListener('mousedown', () => {
+            this.toggleCapsLock();
+          });
+          keyElement.addEventListener('mouseup', () => {
+            this.toggleCapsLock();
+          });
           break;
         case 'lang':
           keyElement.innerHTML = '<span>lang</span>';
@@ -145,6 +153,10 @@ class Keyboard {
   pressKey(event) {
     // eslint-disable-next-line no-restricted-syntax
     for (const key of this.elements.keys) {
+      if (event.shiftKey && event.altKey) {
+        this.toggleLanguage();
+      }
+
       if (event.key === key.textContent) {
         switch (event.key) {
           case 'Backspace':
@@ -152,27 +164,25 @@ class Keyboard {
               .substring(0, this.elements.textarea.value.length - 1);
             break;
           case 'Tab':
-            this.elements.textarea.value += `${' '.repeat(4)}`;
+            event.preventDefault();
+            this.elements.textarea.value += '\t';
             break;
           case 'CapsLock':
             this.toggleCapsLock();
             key.classList.toggle('keyboard__capslock--active', this.props.capsLock);
             break;
+          case 'Shift':
+            this.toggleCapsLock();
+            break;
           case 'Enter':
             this.elements.textarea.value += '\n';
             break;
           case 'Space':
-            console.log(event)
             this.elements.textarea.value += ' ';
             break;
           case 'Ctrl':
             break;
           case 'Alt':
-            break;
-          case 'Shift':
-            this.toggleCapsLock();
-            key.classList.toggle('keyboard__capslock--active', this.props.capsLock);
-            this.toggleCapsLock();
             break;
           case 'Up':
             break;
@@ -193,9 +203,14 @@ class Keyboard {
     }
   }
 
+  keyUp(event) {
+    if (event.shiftKey) {
+      this.toggleCapsLock();
+    }
+  }
+
   toggleCapsLock() {
     this.props.capsLock = !this.props.capsLock;
-
     // eslint-disable-next-line no-restricted-syntax
     for (const key of this.elements.keys) {
       if (key.childElementCount === 0) {
@@ -212,8 +227,6 @@ class Keyboard {
     this.elements.keyContainer.appendChild(this.createKeys(this.props.language));
     this.elements.keys = this.elements.keyContainer.querySelectorAll('.keyboard__key');
   }
-
-
 }
 
 export default Keyboard;
