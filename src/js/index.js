@@ -32,7 +32,7 @@ class Keyboard {
     document.body.appendChild(this.elements.textarea);
     document.body.appendChild(this.elements.keyContainer);
 
-    document.addEventListener('keydown', (e) => {this.pressKey(e)});
+    document.addEventListener('keydown', (e) => { this.pressKey(e); });
   }
 
   createKeys(language) {
@@ -90,7 +90,7 @@ class Keyboard {
           });
           break;
         case 'Space':
-          keyElement.innerHTML = '<span>Space</span>';
+          keyElement.innerHTML = '<span>&#32</span>';
           keyElement.addEventListener('mousedown', () => {
             this.elements.textarea.value += ' ';
           });
@@ -142,6 +142,57 @@ class Keyboard {
     return fragment;
   }
 
+  pressKey(event) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const key of this.elements.keys) {
+      if (event.key === key.textContent) {
+        switch (event.key) {
+          case 'Backspace':
+            this.elements.textarea.value = this.elements.textarea.value
+              .substring(0, this.elements.textarea.value.length - 1);
+            break;
+          case 'Tab':
+            this.elements.textarea.value += `${' '.repeat(4)}`;
+            break;
+          case 'CapsLock':
+            this.toggleCapsLock();
+            key.classList.toggle('keyboard__capslock--active', this.props.capsLock);
+            break;
+          case 'Enter':
+            this.elements.textarea.value += '\n';
+            break;
+          case 'Space':
+            console.log(event)
+            this.elements.textarea.value += ' ';
+            break;
+          case 'Ctrl':
+            break;
+          case 'Alt':
+            break;
+          case 'Shift':
+            this.toggleCapsLock();
+            key.classList.toggle('keyboard__capslock--active', this.props.capsLock);
+            this.toggleCapsLock();
+            break;
+          case 'Up':
+            break;
+          case 'Down':
+            break;
+          case 'Left':
+            break;
+          case 'Right':
+            break;
+
+          default:
+            this.elements.textarea.value += this.props.capsLock
+              ? key.textContent.toUpperCase()
+              : key.textContent.toLowerCase();
+            break;
+        }
+      }
+    }
+  }
+
   toggleCapsLock() {
     this.props.capsLock = !this.props.capsLock;
 
@@ -162,13 +213,7 @@ class Keyboard {
     this.elements.keys = this.elements.keyContainer.querySelectorAll('.keyboard__key');
   }
 
-  pressKey(event) {
-    for(const key of this.elements.keys){
-      if(event.key === key.textContent){
-        this.elements.textarea.value += key.textContent;
-      }
-    }
-  }
+
 }
 
 export default Keyboard;
