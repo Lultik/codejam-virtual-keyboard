@@ -57,12 +57,12 @@ export const lang = {
     ControlLeft: 'Ctrl',
     LangSwitch: 'Lang',
     AltLeft: 'Alt',
-    Space: '',
+    Space: '#&32',
     AltRight: 'Alt',
     ControlRight: '',
+    ArrowLeft: 'arrowLeft',
     ArrowDown: 'arrowDown',
     ArrowRight: 'arrowRight',
-    ArrowLeft: 'arrowLeft',
   },
 
   ru: {
@@ -123,11 +123,11 @@ export const lang = {
     ControlLeft: 'Ctrl',
     LangSwitch: 'Язык',
     AltLeft: 'Alt',
-    Space: '',
+    Space: '#&32',
     AltRight: 'Alt',
     ControlRight: '',
+    ArrowLeft: 'arrowLeft',
     ArrowDown: 'arrowDown',
     ArrowRight: 'arrowRight',
-    ArrowLeft: 'arrowLeft',
   },
 };
