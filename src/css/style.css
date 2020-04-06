@@ -68,25 +68,21 @@ body{
     background: #dedede;
 }
 .arrow{
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
     font-size: 0;
 }
-.arrow__right{
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-}
-.arrow__left{
-    transform: rotate(135deg);
-    -webkit-transform: rotate(135deg);
-}
-.arrow__up{
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-}
-.arrow__down{
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);
-}
+.arrow__right::after{
+     font-size: 2.4rem;
+     content: '\2192';
+ }
+.arrow__down::after{
+     font-size: 2.4rem;
+     content: '\2193';
+ }
+.arrow__left::after{
+     font-size: 2.4rem;
+     content: '\2190';
+ }
+.arrow__up::after{
+     font-size: 2.4rem;
+     content: '\2191';
+ }

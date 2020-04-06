@@ -43,7 +43,7 @@ class Keyboard {
     const fragment = document.createDocumentFragment();
     // const keyLayout = (this.props.language === 'en') ? lang.en : lang.ru;
 
-    Object.entries(this.keyLayout).forEach(([code, key]) => {
+    Object.entries(this.keyLayout).forEach(([key, value]) => {
       const keyElement = builtHtmlElement({
         tagName: 'button',
         classList: ['keyboard__key'],
@@ -51,9 +51,9 @@ class Keyboard {
           type: 'button',
         },
       });
-      const lineBreaks = ['Backspace', '\\', 'Enter', 'arrowUp'].includes(key);
+      const lineBreaks = ['Backspace', '\\', 'Enter', 'arrowUp'].includes(value);
 
-      switch (code) {
+      switch (key) {
         case 'Backspace':
           keyElement.innerHTML = '<span>Backspace</span>';
           keyElement.classList.add('keyboard__key_wide');
@@ -110,31 +110,47 @@ class Keyboard {
           keyElement.innerHTML = '<span>Alt</span>';
           break;
         case 'LangSwitch':
-          keyElement.innerHTML = `<span>${key}</span>`;
+          keyElement.innerHTML = `<span>${value}</span>`;
           keyElement.classList.add('keyboard__key_wide');
           keyElement.addEventListener('mousedown', () => {
             this.toggleLanguage();
           });
           break;
         case 'ArrowUp':
-          keyElement.innerHTML = '<span class="arrow arrow__up">ArrowUp</span>';
+          keyElement.classList.add('arrow__up');
+          keyElement.innerHTML = '<span class="arrow">ArrowUp</span>';
+          keyElement.addEventListener('mousedown', () => {
+            this.elements.textarea.value += '↑'
+          });
           break;
         case 'ArrowDown':
-          keyElement.innerHTML = '<span class="arrow arrow__down">ArrowDown</span>';
+          keyElement.classList.add('arrow__down');
+          keyElement.innerHTML = '<span class="arrow">ArrowDown</span>';
+          keyElement.addEventListener('mousedown', () => {
+            this.elements.textarea.value += '↓';
+          });
           break;
         case 'ArrowLeft':
-          keyElement.innerHTML = '<span class="arrow arrow__left">ArrowLeft</span>';
+          keyElement.classList.add('arrow__left');
+          keyElement.innerHTML = '<span class="arrow">ArrowLeft</span>';
+          keyElement.addEventListener('mousedown', () => {
+            this.elements.textarea.value += '←';
+          });
           break;
         case 'ArrowRight':
-          keyElement.innerHTML = '<span class="arrow arrow__right">ArrowRight</span>';
+          keyElement.classList.add('arrow__right');
+          keyElement.innerHTML = '<span class="arrow">ArrowRight</span>';
+          keyElement.addEventListener('mousedown', () => {
+            this.elements.textarea.value += '→';
+          });
           break;
 
         default:
-          keyElement.textContent = key.toLowerCase();
+          keyElement.textContent = value.toLowerCase();
           keyElement.addEventListener('click', () => {
             this.elements.textarea.value += this.props.capsLock
-              ? key.toUpperCase()
-              : key.toLowerCase();
+              ? value.toUpperCase()
+              : value.toLowerCase();
           });
           break;
       }
@@ -189,13 +205,20 @@ class Keyboard {
           case 'ControlRight':
           case 'AltLeft':
           case 'AltRight':
-          case 'ArrowUp':
-          case 'ArrowDown':
-          case 'ArrowLeft':
-          case 'ArrowRight':
             event.preventDefault();
             break;
-
+          case 'ArrowUp':
+            this.elements.textarea.value += '↑';
+            break;
+          case 'ArrowDown':
+            this.elements.textarea.value += '↓';
+            break;
+          case 'ArrowLeft':
+            this.elements.textarea.value += '←';
+            break;
+          case 'ArrowRight':
+            this.elements.textarea.value += '→';
+            break;
           default:
             this.elements.textarea.value += this.props.capsLock
               ? value.toUpperCase()
