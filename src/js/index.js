@@ -1,5 +1,5 @@
-import { builtHtmlElement } from './templateHelper';
-import { lang } from './language';
+import builtHtmlElement from './templateHelper';
+import lang from './language';
 
 class Keyboard {
   constructor() {
@@ -117,16 +117,16 @@ class Keyboard {
           });
           break;
         case 'ArrowUp':
-          keyElement.innerHTML = '<span class="arrow arrow__up"></span>';
+          keyElement.innerHTML = '<span class="arrow arrow__up">ArrowUp</span>';
           break;
         case 'ArrowDown':
-          keyElement.innerHTML = '<span class="arrow arrow__down"></span>';
+          keyElement.innerHTML = '<span class="arrow arrow__down">ArrowDown</span>';
           break;
         case 'ArrowLeft':
-          keyElement.innerHTML = '<span class="arrow arrow__left"></span>';
+          keyElement.innerHTML = '<span class="arrow arrow__left">ArrowLeft</span>';
           break;
         case 'ArrowRight':
-          keyElement.innerHTML = '<span class="arrow arrow__right"></span>';
+          keyElement.innerHTML = '<span class="arrow arrow__right">ArrowRight</span>';
           break;
 
         default:
@@ -220,14 +220,14 @@ class Keyboard {
 
   toggleCapsLock() {
     this.props.capsLock = !this.props.capsLock;
-    // eslint-disable-next-line no-restricted-syntax
-    for (const key of this.elements.keys) {
-      if (key.childElementCount === 0) {
-        key.textContent = this.props.capsLock
-          ? key.textContent.toUpperCase()
-          : key.textContent.toLowerCase();
-      } else if (key.textContent === 'CapsLock') {
-        key.classList.toggle('keyboard__key_active', this.props.capsLock);
+
+    for (let i = 0; i < this.elements.keys.length; i += 1) {
+      if (this.elements.keys[i].childElementCount === 0) {
+        this.elements.keys[i].textContent = this.props.capsLock
+          ? this.elements.keys[i].textContent.toUpperCase()
+          : this.elements.keys[i].textContent.toLowerCase();
+      } else if (this.elements.keys[i].textContent === 'CapsLock') {
+        this.elements.keys[i].classList.toggle('keyboard__key_active', this.props.capsLock);
       }
     }
   }

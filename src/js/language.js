@@ -1,4 +1,4 @@
-export const lang = {
+const lang = {
   en: {
     Backquote: '`',
     Digit1: '1',
@@ -131,3 +131,4 @@ export const lang = {
     ArrowRight: 'arrowRight',
   },
 };
+export default lang;
