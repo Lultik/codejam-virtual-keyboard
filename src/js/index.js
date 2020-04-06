@@ -120,7 +120,7 @@ class Keyboard {
           keyElement.classList.add('arrow__up');
           keyElement.innerHTML = '<span class="arrow">ArrowUp</span>';
           keyElement.addEventListener('mousedown', () => {
-            this.elements.textarea.value += '↑'
+            this.elements.textarea.value += '↑';
           });
           break;
         case 'ArrowDown':
