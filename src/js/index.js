@@ -41,7 +41,6 @@ class Keyboard {
 
   createKeys() {
     const fragment = document.createDocumentFragment();
-    // const keyLayout = (this.props.language === 'en') ? lang.en : lang.ru;
 
     Object.entries(this.keyLayout).forEach(([key, value]) => {
       const keyElement = builtHtmlElement({
