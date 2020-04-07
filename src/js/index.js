@@ -51,7 +51,7 @@ class Keyboard {
           type: 'button',
         },
       });
-      const lineBreaks = ['Backspace', '\\', 'Enter', 'arrowUp'].includes(value);
+      const lineBreaks = ['Backspace', '\\', 'Enter', 'ArrowUp'].includes(value);
 
       switch (key) {
         case 'Backspace':

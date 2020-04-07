@@ -119,7 +119,7 @@ const lang = {
     Period: 'ю',
     Slash: '.',
     ShiftRight: 'Shift',
-    ArrowUp: 'arrowUp',
+    ArrowUp: 'ArrowUp',
     ControlLeft: 'Ctrl',
     LangSwitch: 'Язык',
     AltLeft: 'Alt',
